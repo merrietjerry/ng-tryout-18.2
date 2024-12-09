@@ -1,0 +1,55 @@
+<div class="image-viewer-container">
+  <div class="controls">
+    <button
+      pButton
+      label="Zoom In"
+      icon="pi pi-search-plus"
+      (click)="zoomIn()"
+      class="p-button-outlined"
+    ></button>
+    <button
+      pButton
+      label="Zoom Out"
+      icon="pi pi-search-minus"
+      (click)="zoomOut()"
+      class="p-button-outlined"
+    ></button>
+    <button
+      pButton
+      label="Rotate +"
+      icon="pi pi-refresh"
+      (click)="rotateClockwise()"
+      class="p-button-outlined"
+    ></button>
+    <button
+      pButton
+      label="Rotate -"
+      icon="pi pi-undo"
+      (click)="rotateCounterClockwise()"
+      class="p-button-outlined"
+    ></button>
+    <button
+      pButton
+      label="Reset"
+      icon="pi pi-replay"
+      (click)="reset()"
+      class="p-button-outlined"
+    ></button>
+  </div>
+  <div>
+    <p>Zoom Level: {{ zoomLevel }}</p>
+    <p>Rotate Angle: {{ rotationAngle }}</p>
+  </div>
+  <div class="image-container">
+    <div
+      class="image-wrapper"
+      [style.transform]="'rotate(' + rotationAngle + 'deg)'"
+    >
+      <img
+        [src]="base64Image"
+        alt="Base64 Image"
+        [style.transform]="'scale(' + zoomLevel + ')'"
+      />
+    </div>
+  </div>
+</div>

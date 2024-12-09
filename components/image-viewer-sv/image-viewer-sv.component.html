@@ -1,0 +1,38 @@
+<div class="controls">
+  <p-button (click)="zoomIn()">Zoom In</p-button>
+  <p-button (click)="zoomOut()">Zoom Out</p-button>
+  <p-button (click)="rotateClockwise()">Rotate +</p-button>
+  <p-button (click)="rotateCounterClockwise()">Rotate -</p-button>
+  <p-button (click)="reset()">Reset</p-button>
+</div>
+
+<div
+  class="image-container"
+  mwlResizable
+  (mousedown)="onMouseDown($event)"
+  (mousemove)="onMouseMove($event)"
+  (mouseup)="onMouseUp($event)"
+>
+  <img
+    [src]="imageSrc"
+    alt="Draggable Image"
+    [style.transform]="
+      'scale(' + zoomLevel + ') rotate(' + rotationAngle + 'deg)'
+    "
+    class="image"
+  />
+  <!-- Render highlights -->
+  <div
+    *ngFor="let highlight of highlights"
+    [ngStyle]="{
+      left: highlight.x + 'px',
+      top: highlight.y + 'px',
+      width: highlight.width + 'px',
+      height: highlight.height + 'px',
+      background: highlight.drawing
+        ? 'rgba(0, 0, 255, 0.3)'
+        : 'rgba(255, 0, 0, 0.5)'
+    }"
+    class="highlight"
+  ></div>
+</div>
