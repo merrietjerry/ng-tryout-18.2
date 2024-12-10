@@ -1,0 +1,60 @@
+<div class="image-viewer-container">
+  <!-- Controls Section -->
+  <div class="image-controls">
+    <p-button (click)="zoomIn()">Zoom In</p-button>
+    <p-button (click)="zoomOut()">Zoom Out</p-button>
+    <p-button (click)="rotateClockwise()">Rotate +</p-button>
+    <p-button (click)="rotateCounterClockwise()">Rotate -</p-button>
+    <p-button (click)="reset()">Reset</p-button>
+    <p-button (click)="handleHighlight(0)">Highlight 1</p-button>
+    <p-button (click)="handleHighlight(1)">Highlight 2</p-button>
+  </div>
+
+  <!-- Image Status Display -->
+  <div class="image-status">
+    <p>Zoom Level: {{ zoomLevel }} | Rotation Angle: {{ rotationAngle }}°</p>
+  </div>
+
+  <!-- Image Container -->
+  <div class="image-content">
+    <!-- Thumbnail container (if any thumbnails are displayed) -->
+    <div class="image-thumbnail-container">
+      <p-button (click)="handleImage(0)">Image 1</p-button>
+      <p-button (click)="handleImage(1)">Image 2</p-button>
+      <p-button (click)="handleImage(2)">Image 3</p-button>
+    </div>
+
+    <!-- SVG Image Container -->
+    <div class="image-svg-container">
+      <svg
+        #svgContainer
+        xmlns="http://www.w3.org/2000/svg"
+        [attr.width]="imageWidth"
+        [attr.height]="imageHeight"
+        class="image-overlay"
+      >
+        <!-- Group containing Image and Highlights -->
+        <g>
+          <!-- Image -->
+          <image
+            [attr.xlink:href]="'data:image/png;base64,' + base64Data"
+            [attr.width]="imageWidth * zoomLevel"
+            [attr.height]="imageHeight * zoomLevel"
+            [attr.x]="0"
+            [attr.y]="0"
+          ></image>
+
+          <!-- Highlighted Areas -->
+          <rect
+            [attr.x]="highlight.x * zoomLevel"
+            [attr.y]="highlight.y * zoomLevel"
+            [attr.width]="highlight.width * zoomLevel"
+            [attr.height]="highlight.height * zoomLevel"
+            [attr.fill]="highlight.color"
+            opacity="0.5"
+          ></rect>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
