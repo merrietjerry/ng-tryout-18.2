@@ -1,0 +1,99 @@
+<div class="image-viewer-container">
+  <!-- Controls Section -->
+  <div class="image-controls">
+    <p-button (onClick)="zoomIn()">Zoom In</p-button>
+    <p-button (onClick)="zoomOut()">Zoom Out</p-button>
+    <p-button (onClick)="rotateClockwise()">Rotate +</p-button>
+    <p-button (onClick)="rotateCounterClockwise()">Rotate -</p-button>
+    <p-button (onClick)="reset()">Reset</p-button>
+    <p-button (onClick)="handleHighlight(0)">Highlight 1</p-button>
+    <p-button (onClick)="handleHighlight(1)">Highlight 2</p-button>
+  </div>
+
+  <!-- Image Status Display -->
+  <div class="image-status">
+    <p>
+      Zoom Level: {{ transformations.zoomLevel }} | Rotation Angle:
+      {{ transformations.rotationAngle }}°
+    </p>
+  </div>
+
+  <!-- Image Container -->
+  <div class="image-content">
+    <p-splitter
+      [panelSizes]="[20, 80]"
+      [style]="{ height: '600px' }"
+      styleClass="mb-8"
+      [minSizes]="[10, 50]"
+    >
+      <ng-template pTemplate>
+        <div class="flex items-center justify-center h-full">
+          <!-- Thumbnail container (if any thumbnails are displayed) -->
+          <div class="image-thumbnail-container">
+            <p-button
+              label="Image 1"
+              [link]="true"
+              (onClick)="handleImage(0)"
+            />
+            <p-button
+              label="Image 2"
+              [link]="true"
+              (onClick)="handleImage(1)"
+            />
+            <p-button
+              label="Image 3"
+              [link]="true"
+              (onClick)="handleImage(2)"
+            />
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate>
+        <div class="flex items-center justify-center h-full">
+          <!-- SVG Image Container -->
+          <div class="image-svg-container">
+            <svg
+              #svgContainer
+              xmlns="http://www.w3.org/2000/svg"
+              [attr.width]="imageProperties.width"
+              [attr.height]="imageProperties.height"
+              class="image-overlay"
+            >
+              <!-- Group containing Image and Highlights -->
+              <g>
+                <!-- Image -->
+                <image
+                  [attr.xlink:href]="
+                    'data:image/png;base64,' + imageProperties.base64Data
+                  "
+                  [attr.width]="
+                    imageProperties.width * transformations.zoomLevel
+                  "
+                  [attr.height]="
+                    imageProperties.height * transformations.zoomLevel
+                  "
+                  [attr.x]="0"
+                  [attr.y]="0"
+                ></image>
+
+                <!-- Highlighted Areas -->
+                <rect
+                  [attr.x]="currentHighlight.x * transformations.zoomLevel"
+                  [attr.y]="currentHighlight.y * transformations.zoomLevel"
+                  [attr.width]="
+                    currentHighlight.width * transformations.zoomLevel
+                  "
+                  [attr.height]="
+                    currentHighlight.height * transformations.zoomLevel
+                  "
+                  [attr.fill]="currentHighlight.color"
+                  opacity="0.5"
+                ></rect>
+              </g>
+            </svg>
+          </div>
+        </div>
+      </ng-template>
+    </p-splitter>
+  </div>
+</div>
