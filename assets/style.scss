@@ -1,0 +1,53 @@
+/* error-log.component.scss */
+.error-log-overlay {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #f8d7da;
+  border-top: 1px solid #f5c6cb;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+  transform: translateY(100%);
+  z-index: 1000;
+
+  &.visible {
+    transform: translateY(0);
+  }
+
+  .error-log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    background: #f5c6cb;
+    cursor: pointer;
+    color: #721c24;
+    font-weight: bold;
+
+    .pi {
+      font-size: 1.2rem;
+    }
+  }
+
+  .error-log-content {
+    padding: 1rem;
+    max-height: 200px;
+    overflow-y: auto;
+
+    ul {
+      margin: 0;
+      padding: 0;
+      list-style-type: none;
+
+      li {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid #f5c6cb;
+
+        &:last-child {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}
